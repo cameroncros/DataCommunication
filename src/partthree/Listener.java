@@ -1,13 +1,14 @@
-package com.cameroncros.partthree;
+package partthree;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Listener implements Runnable {
+public class Listener extends Thread {
 	ServerSocket welcomeSocket = null;
 	
 	Listener () {
+		
 		
 		try {
 		welcomeSocket = new ServerSocket(4010);
@@ -15,6 +16,7 @@ public class Listener implements Runnable {
 		} 
 		catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
+			System.exit(e.hashCode());
 		}
 	}
 	
@@ -29,13 +31,14 @@ public class Listener implements Runnable {
 
 	@Override
 	public void run() {
+		System.out.println("Listening");
 		while(true)
 		{
 			Socket connectionSocket;
 			try {
 				connectionSocket = welcomeSocket.accept();
-				System.out.println(connectionSocket.getInetAddress().toString());
-				new RecvMessage(connectionSocket);
+				Thread rv = new RecvMessage(connectionSocket);
+				rv.start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

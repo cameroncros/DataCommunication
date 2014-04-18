@@ -1,4 +1,4 @@
-package com.cameroncros.partone;
+package partone;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

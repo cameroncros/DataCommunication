@@ -1,4 +1,4 @@
-package com.cameroncros.partthree;
+package partthree;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

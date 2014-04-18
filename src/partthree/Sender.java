@@ -1,4 +1,4 @@
-package com.cameroncros.partthree;
+package partthree;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,11 +12,13 @@ public class Sender {
 	
 	Sender() {
 		peers = new PeerList();
+		SendLoop();
 	}
 	//http://alvinalexander.com/java/edu/pj/pj010005
 	// Accessed 16/4/14 - Modified BufferedReader code
 	void SendLoop() {
 		while (true) {
+			System.out.print("> ");
 		 //  open up standard input
 	      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
