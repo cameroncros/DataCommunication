@@ -3,14 +3,17 @@ package partthree;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Vector;
 
 public class RecvMessage extends Thread {
 	
 	Socket socket;
 	DataInputStream inFromServer;
+	Boolean auth = true;
+	Vector<String> peers;
 	
 	RecvMessage(Socket sock) {
-		
+		peers = (new PeerList()).getPeers();
 		socket = sock;
 		try {
 			 inFromServer = new DataInputStream(socket.getInputStream());

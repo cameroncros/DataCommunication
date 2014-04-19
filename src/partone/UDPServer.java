@@ -4,6 +4,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import constants.Constants;
+
 
 
 /**
@@ -20,7 +22,7 @@ public class UDPServer {
 		 * create new socket on port 9876
 		 */
 		try {
-			serverSocket = new DatagramSocket(4010);
+			serverSocket = new DatagramSocket( Constants.port);
 		} 
 		catch (Exception e) {
 			System.out.println("Failed to open a socket: " + e.getLocalizedMessage());

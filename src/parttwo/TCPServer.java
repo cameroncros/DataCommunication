@@ -1,11 +1,11 @@
 package parttwo;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import constants.Constants;
 
 class TCPServer {
 	public static void main(String argv[])
@@ -14,7 +14,7 @@ class TCPServer {
 		try {
 		String clientSentence;
 		String capitalizedSentence;
-		welcomeSocket = new ServerSocket(4010);
+		welcomeSocket = new ServerSocket( Constants.port);
 		while(true)
 		{
 			Socket connectionSocket = welcomeSocket.accept();

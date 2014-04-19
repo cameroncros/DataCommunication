@@ -4,6 +4,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import constants.Constants;
+
 public class SendMessage {
 	Socket clientSocket = null;
 	DataOutputStream outToServer = null;
@@ -11,7 +13,7 @@ public class SendMessage {
 	
 	SendMessage(String address) {
 		try {
-			clientSocket = new Socket(address, 4010);
+			clientSocket = new Socket(address, Constants.port);
 			outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
