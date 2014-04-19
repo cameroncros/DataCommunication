@@ -27,6 +27,7 @@ public class Sender {
 	      //  read the message from the command-line; need to use try/catch with the
 	      //  readLine() method
 	      try {
+	    	  message = null;
 	         message = br.readLine();
 	         for (String f : peers.getPeers()) {
 	        	 if (peerSender.containsKey(f) != true) {
