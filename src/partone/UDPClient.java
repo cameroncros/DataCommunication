@@ -4,6 +4,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import constants.Constants;
+
 public class UDPClient {
 	public static void main(String args[])    
 	{  
@@ -14,7 +16,7 @@ public class UDPClient {
 			byte[] receiveData = new byte[1024];  
 			String sentence = "Hello Server, who are you? I am 7193432";    
 			sendData = sentence.getBytes(); 
-			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 4010); 
+			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress,  Constants.port); 
 			clientSocket.send(sendPacket);  
 			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length); 
 			clientSocket.receive(receivePacket);   

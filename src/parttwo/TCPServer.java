@@ -1,5 +1,6 @@
 package parttwo;
 
+<<<<<<< HEAD
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
@@ -25,15 +26,57 @@ class TCPServer {
 			capitalizedSentence = clientSentence.toUpperCase() + '\n';
 			outToClient.writeBytes(capitalizedSentence);
 		}
+=======
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+class TCPServer extends Thread {
+
+	ServerSocket welcomeSocket = null;
+
+	TCPServer () {
+		try {
+			welcomeSocket = new ServerSocket(4010);
+
+>>>>>>> dfe905a50f0e804c6508e5398cf044ced7c967e4
 		} 
 		catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
-			try {
-				welcomeSocket.close();
-			}
-			catch (Exception f) {
-				System.out.println(f.getLocalizedMessage());
-			}
+			System.exit(e.hashCode());
 		}
-	} 
-	}//See more at: http://systembash.com/content/a-simple-java-tcp-server-and-tcp-client/#sthash.TI4X4ulR.dpuf
+	}
+
+	void finalise() {
+		try {
+			welcomeSocket.close();
+		}
+		catch (Exception f) {
+			System.out.println(f.getLocalizedMessage());
+		}
+	}
+
+	@Override
+	public void run() {
+		System.out.println("Listening");
+		while(true)
+		{
+			Socket connectionSocket;
+			try {
+				connectionSocket = welcomeSocket.accept();
+				Thread rv = new SendFile(connectionSocket);
+				rv.start();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+	public static void main(String argv[])
+	{
+		TCPServer ts = new TCPServer();
+		ts.start();
+	}
+}

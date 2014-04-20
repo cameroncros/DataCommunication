@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import constants.Constants;
+
 public class Listener extends Thread {
 	ServerSocket welcomeSocket = null;
 	
@@ -11,7 +13,7 @@ public class Listener extends Thread {
 		
 		
 		try {
-		welcomeSocket = new ServerSocket(4010);
+		welcomeSocket = new ServerSocket( Constants.port);
 		
 		} 
 		catch (Exception e) {

@@ -16,7 +16,13 @@ public class RecvMessage extends Thread {
 		peers = (new PeerList()).getPeers();
 		socket = sock;
 		try {
-			 inFromServer = new DataInputStream(socket.getInputStream());
+			String ipaddr = socket.getInetAddress().getHostAddress();
+			if (!peers.contains(ipaddr)) {
+				System.out.println("Connection from an invalid host: " + ipaddr);
+				auth = false;
+			}
+			
+			inFromServer = new DataInputStream(socket.getInputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -28,6 +34,9 @@ public class RecvMessage extends Thread {
 		int length = 0;
 		String modifiedSentence;
 		byte[] sendData = new byte[1024];
+		if (auth == false) {
+			return;
+		}
 		while (true) {
 			try {
 				length = 0;
