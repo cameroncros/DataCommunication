@@ -7,26 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-<<<<<<< HEAD
-import constants.Constants;
-
-class TCPClient {
-	public static void main(String argv[]) throws Exception
-	{
-		String sentence;
-		String modifiedSentence;
-		BufferedReader inFromUser = new BufferedReader( new InputStreamReader(System.in));
-		Socket clientSocket = new Socket("localhost",  Constants.port);
-		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		sentence = inFromUser.readLine();
-		outToServer.writeBytes(sentence + '\n');
-		modifiedSentence = inFromServer.readLine();
-		System.out.println("FROM SERVER: " + modifiedSentence);
-		clientSocket.close();
-	} 
-}// See more at: http://systembash.com/content/a-simple-java-tcp-server-and-tcp-client/#sthash.TI4X4ulR.dpuf
-=======
 public class TCPClient {
 	Socket clientSocket = null;
 	DataOutputStream outToServer = null;
@@ -87,4 +67,3 @@ public class TCPClient {
 		new TCPClient(argv[1]);
 	}
 }
->>>>>>> dfe905a50f0e804c6508e5398cf044ced7c967e4
