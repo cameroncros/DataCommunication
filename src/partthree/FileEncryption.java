@@ -1,4 +1,4 @@
-package parttwo;
+package partthree;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
