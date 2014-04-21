@@ -8,9 +8,10 @@ class TCPServer extends Thread {
 
 	ServerSocket welcomeSocket = null;
 
-	TCPServer () {
+	TCPServer (String port) {
 		try {
-			welcomeSocket = new ServerSocket(4010);
+			int pt = new Integer(port);
+			welcomeSocket = new ServerSocket(pt);
 
 		} 
 		catch (Exception e) {
@@ -31,24 +32,27 @@ class TCPServer extends Thread {
 	@Override
 	public void run() {
 		System.out.println("Listening");
-		while(true)
-		{
-			Socket connectionSocket;
-			try {
+
+		Socket connectionSocket;
+		try {
+			while(true)
+			{
 				connectionSocket = welcomeSocket.accept();
 				Thread rv = new SendFile(connectionSocket);
 				rv.start();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-
 		}
-
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+
 	public static void main(String argv[])
 	{
-		TCPServer ts = new TCPServer();
-		ts.start();
+		if (argv.length == 1) {
+			TCPServer ts = new TCPServer(argv[0]);
+			ts.start();
+		}
 	}
 }
