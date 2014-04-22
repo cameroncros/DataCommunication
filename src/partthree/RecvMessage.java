@@ -3,7 +3,11 @@ package partthree;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
 import java.util.Vector;
+
+import constants.Constants;
 
 public class RecvMessage extends Thread {
 	
@@ -11,6 +15,8 @@ public class RecvMessage extends Thread {
 	DataInputStream inFromServer;
 	Boolean auth = true;
 	Vector<String> peers;
+	
+	StringEncryption se;
 	
 	RecvMessage(Socket sock) {
 		peers = (new PeerList()).getPeers();
@@ -23,7 +29,9 @@ public class RecvMessage extends Thread {
 			}
 			
 			inFromServer = new DataInputStream(socket.getInputStream());
-		} catch (IOException e) {
+			se = new StringEncryption();
+			se.loadKey(Constants.keyfile);
+		} catch (IOException | GeneralSecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -33,7 +41,7 @@ public class RecvMessage extends Thread {
 	public void run() {
 		int length = 0;
 		String modifiedSentence;
-		byte[] sendData = new byte[1024];
+		byte[] sendData = null;
 		if (auth == false) {
 			return;
 		}
@@ -42,16 +50,20 @@ public class RecvMessage extends Thread {
 				length = 0;
 				while (length == 0) {
 				length = inFromServer.readInt();
+				sendData = new byte[length];
 				length = inFromServer.read(sendData, 0, length);
 				}
 				if (length == -1) {
 					//todo: put a nice message to indicate that the person has left
 					return;
 				}
-				modifiedSentence = new String(sendData, 0, length, "UTF-8");
+				modifiedSentence = se.decrypt(sendData);
 				System.out.println("<" + socket.getInetAddress() + ">: " + modifiedSentence);
 				
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeyException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

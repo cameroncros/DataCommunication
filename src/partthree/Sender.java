@@ -29,6 +29,9 @@ public class Sender {
 	      try {
 	    	  message = null;
 	         message = br.readLine();
+	         if (message.compareTo("/quit") == 0) {
+	        	 System.exit(0);
+	         }
 	         for (String f : peers.getPeers()) {
 	        	 if (peerSender.containsKey(f) != true) {
 	        		 peerSender.put(f, new SendMessage(f));
