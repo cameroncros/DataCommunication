@@ -9,13 +9,15 @@ import java.util.Map;
 /**
  * Code copied from: http://alvinalexander.com/java/edu/pj/pj010005
  * Accessed 16/4/14 - Modified BufferedReader code
- * @author cameron
+* @author Cameron Cross 7193432
  *
  */
 public class Sender {
 	PeerList peers = null;
 	Map<String, SendMessage> peerSender = new HashMap<String, SendMessage>();
-
+/**
+ * Sets up the class and starts the send loop
+ */
 	Sender() {
 		//get all the peers to send to
 		peers = PeerList.getInstance();
@@ -24,6 +26,9 @@ public class Sender {
 	}
 	//http://alvinalexander.com/java/edu/pj/pj010005
 	// Accessed 16/4/14 - Modified BufferedReader code
+	/**
+	 * waits for input from the keyboard and sends it to the peers
+	 */
 	void SendLoop() {
 		while (true) {
 			System.out.print("> ");

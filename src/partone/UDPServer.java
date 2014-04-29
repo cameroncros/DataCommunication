@@ -11,12 +11,15 @@ import constants.Constants;
 /**
  * This code is entirely lifted from: http://systembash.com/content/a-simple-java-udp-server-and-udp-client/
  * Accessed 13 April 2014
- * Modified by Cameron Cross
- * @author Dave Drager
+ * @author  Cameron Cross 7193432
  *
  */
 
 public class UDPServer {
+	/**
+	 * This program has no real classes, only a main function
+	 * @param args - String array containing: [port]
+	 */
 	public static void main(String args[])     
 	{
 		//initialises a server port with the default port, and then checks if the user has supplied a real port 
@@ -24,7 +27,7 @@ public class UDPServer {
 		if (args.length == 1) {
 			serverport = new Integer(args[0]);
 		} else {
-			return;
+			System.out.println("Expects: [port]");
 		}
 		DatagramSocket serverSocket;
 		/**

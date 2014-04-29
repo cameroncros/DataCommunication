@@ -12,7 +12,7 @@ import constants.Constants;
 /**
  * Code Borrowed From: //http://www.javapractices.com/topic/TopicAction.do?Id=245
  * Accessed 14 April 2014
- * @author cameron
+ * @author  Cameron Cross 7193432
  *
  */
 
@@ -21,7 +21,10 @@ public class SendFile extends Thread {
 	Socket socket;
 	DataInputStream inFromServer;
 	DataOutputStream outToClient;
-
+/**
+ * 
+ * @param sock - the socket associated with the client
+ */
 	SendFile(Socket sock) {
 
 		socket = sock;
@@ -35,7 +38,10 @@ public class SendFile extends Thread {
 			e.printStackTrace();
 		}
 	}
-
+	
+/**
+ * run - this function is what is run in the new thread, it listens for the filename and then send the file
+ */
 	@Override
 	public void run() {
 		int length = 0;

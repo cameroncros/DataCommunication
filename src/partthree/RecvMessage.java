@@ -8,7 +8,11 @@ import java.security.InvalidKeyException;
 import java.util.Vector;
 
 import constants.Constants;
-
+/**
+ * Class that handles receiving messages
+ * @author  Cameron Cross 7193432
+ *
+ */
 public class RecvMessage extends Thread {
 
 	Socket socket;
@@ -17,7 +21,10 @@ public class RecvMessage extends Thread {
 	Vector<String> peers;
 	Vector<String> invalid;
 	StringEncryption se;
-
+/**
+ * 
+ * @param sock - The socket to receive from
+ */
 	RecvMessage(Socket sock) {
 		//get a list of peers from the peerlist class
 		PeerList pl = PeerList.getInstance();
@@ -49,7 +56,9 @@ public class RecvMessage extends Thread {
 			e.printStackTrace();
 		}
 	}
-
+/**
+ * listens on the socket and receive the message
+ */
 	@Override
 	public void run() {
 		int length = 0;

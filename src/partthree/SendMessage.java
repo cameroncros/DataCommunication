@@ -7,14 +7,21 @@ import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 
 import constants.Constants;
-
+/**
+ * Handles sending the message to a host
+ * @author  Cameron Cross 7193432
+ *
+ */
 public class SendMessage {
 	Socket clientSocket = null;
 	DataOutputStream outToServer = null;
 	Boolean me = false;
 	StringEncryption se;
 	Boolean connected = true;
-	
+	/**
+	 * Sets up the socket and checks if it is correct
+	 * @param address - The address to send the message to
+	 */
 	SendMessage(String address) {
 		try {
 			//create socket to address and port given
@@ -38,7 +45,10 @@ public class SendMessage {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * sends the message to the socket
+	 * @param message - The message to be sent
+	 */
 	void send(String message) {
 		byte[] utf8Bytes;
 		//check if we are talking to ourselves and exit if we are
@@ -58,7 +68,10 @@ public class SendMessage {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Check if the socket is connected correctly and nothing has gone wrong
+	 * @return connected - Check to see if the class is connected
+	 */
 	Boolean isConnected() {
 		return connected;
 	}

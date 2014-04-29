@@ -22,9 +22,12 @@ import java.io.File;
 
 
 /**
- * Utility class for encrypting/decrypting files. Stolen from here: http://www.macs.hw.ac.uk/~ml355/lore/FileEncryption.java
+ * Utility class for encrypting/decrypting files. Stolen from here: 
+ * http://www.macs.hw.ac.uk/~ml355/lore/FileEncryption.java
  * Described here: http://www.macs.hw.ac.uk/~ml355/lore/pkencryption.htm
- * @author Michael Lones
+ * Heavily modifed so that in encrypts strings to byte arrays, and decrypts bytearrays to strings
+* @author Cameron Cross 7193432
+ * 
  */
 public class StringEncryption {
 
@@ -55,6 +58,7 @@ public class StringEncryption {
 
 	/**
 	 * Loads the AES key in a raw format
+	 * @param in - file the key is stored in
 	 */
 	public void loadKey(File in) throws GeneralSecurityException, IOException {
 		// read AES key
@@ -75,9 +79,13 @@ public class StringEncryption {
 		os.close();
 	}
 
-	/**
-	 * Encrypts and then copies the contents of a given file.
-	 */
+/**
+ * Encrypts string and returns byte array
+ * @param in String to be encrypted
+ * @return ByteAray containing the encrypted data
+ * @throws IOException
+ * @throws InvalidKeyException
+ */
 	public byte[] encrypt(String in) throws IOException, InvalidKeyException {
 		aesCipher.init(Cipher.ENCRYPT_MODE, aeskeySpec);
 
@@ -91,10 +99,13 @@ public class StringEncryption {
 
 		return stream.toByteArray();
 	}
-
-	/**
-	 * Decrypts and then copies the contents of a given file.
-	 */
+/**
+ * Decryots byte array and returns a string
+ * @param in byte array containing encrypted data
+ * @return String containing the decrypted text
+ * @throws IOException
+ * @throws InvalidKeyException
+ */
 	public String decrypt(byte[] in) throws IOException, InvalidKeyException {
 		
 		int i;
@@ -116,12 +127,5 @@ public class StringEncryption {
 		os.close();
 		
 		return os.toString("UTF-8");
-	}
-
-	/**
-	 * Copies a stream.
-	 */
-	private void copy(InputStream is, OutputStream os) throws IOException {
-
 	}
 }

@@ -9,12 +9,15 @@ import constants.Constants;
 /**
  * This code is stolen from: http://systembash.com/content/a-simple-java-udp-server-and-udp-client/#sthash.CAm9v4QA.dpuf
  * Accessed 13 April 2014
- * Modified by Cameron Cross
- * @author Dave Drager
+ * @author Cameron Cross 7193432
  *
  */
 
 public class UDPClient {
+	/**
+	 * Main function, there are no real classes for this limited program
+	 * @param args - String array containing: [address] [port] 
+	 */
 	public static void main(String args[])    
 	{  
 		//here are 2 variables to store the address and port
@@ -25,6 +28,7 @@ public class UDPClient {
 			addr = args[0];
 			port = new Integer(args[1]);
 		} else {
+			System.out.println("Expects: [address] [port]");
 			return;
 		}
 		try {

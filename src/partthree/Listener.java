@@ -5,10 +5,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import constants.Constants;
-
+/**
+ * Listens for incomming connections and passes the new socket to RecvMessage
+ * @author  Cameron Cross 7193432
+ *
+ */
 public class Listener extends Thread {
 	ServerSocket welcomeSocket = null;
-	
+	/**
+	 * 	sets up the socket to listen on
+	 */
 	Listener () {
 		try {
 			//opens a socket and listens on it
@@ -19,7 +25,9 @@ public class Listener extends Thread {
 			System.exit(e.hashCode());
 		}
 	}
-	
+	/**
+	 * closes the socket when the class is destroyed
+	 */
 	void finalise() {
 		try {
 			//closes the socket
@@ -29,7 +37,9 @@ public class Listener extends Thread {
 			System.out.println(f.getLocalizedMessage());
 		}
 	}
-
+	/**
+	 * listens for new connections
+	 */
 	@Override
 	public void run() {
 		System.out.println("Listening");
@@ -49,10 +59,10 @@ public class Listener extends Thread {
 			}
 
 		}
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 }

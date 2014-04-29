@@ -13,10 +13,9 @@ import constants.Constants;
  * Accessed 29/Apr/14
  * Code copied from: http://www.javapractices.com/topic/TopicAction.do?Id=245
  * Accessed 29/Apr/14
- * @author cameron
+ * @author  Cameron Cross 7193432
  *
  */
-
 public class TCPClient {
 	Socket clientSocket = null;
 	DataOutputStream outToServer = null;
@@ -35,7 +34,10 @@ public class TCPClient {
 			e.printStackTrace();
 		}
 	}
-// requests the file from the server and writes it to the disk
+/**
+ *  requests the file from the server and writes it to the disk
+ * @param message - the message to be send
+ */
 	void requestFile(String message) {
 		byte[] utf8Bytes;
 		byte[] fileBytes = new byte[100];
@@ -84,7 +86,10 @@ public class TCPClient {
 			e.printStackTrace();
 		}
 	}
-
+/**
+ * This is the main function
+ * @param argv - Array of strings containing [addr] [port] [filename]
+ */
 	public static void main(String[] argv) {
 		if (argv.length == 3) {
 			//create and initialise the TCPClient object

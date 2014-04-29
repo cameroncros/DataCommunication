@@ -3,11 +3,18 @@ package parttwo;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+/**
+ * This is the file server class. It listens for the connections and passes new connections off to send fiule
+ * @author  Cameron Cross 7193432
+ *
+ */
 class TCPServer extends Thread {
 
 	ServerSocket welcomeSocket = null;
-
+	/**
+	 * This function sets up the TCPServer class
+	 * @param port - String containing the port
+	 */
 	TCPServer (String port) {
 		try {
 			//convert the port to an int, this is allowed to fail as it is assumed that the user will actually put in a correct port
@@ -21,7 +28,9 @@ class TCPServer extends Thread {
 			System.exit(e.hashCode());
 		}
 	}
-
+	/**
+	 * This function is supposed to close the socket when the class is cleaned up by the Garbage collector. I dunno if it is necessary
+	 */
 	void finalise() {
 		try {
 			//close the socket
@@ -31,7 +40,9 @@ class TCPServer extends Thread {
 			System.out.println(f.getLocalizedMessage());
 		}
 	}
-
+	/**
+	 * This function listens for an incoming connection and passes it off to SendFile
+	 */
 	@Override
 	public void run() {
 		System.out.println("Listening");
@@ -46,7 +57,7 @@ class TCPServer extends Thread {
 				Thread rv = new SendFile(connectionSocket);
 				//start the SendFile instance and go back to listening
 				rv.start();
-				
+
 			}
 		}
 		catch (IOException e) {
@@ -54,7 +65,10 @@ class TCPServer extends Thread {
 			e.printStackTrace();
 		}
 	}
-
+/**
+ * main function, checks arguements and passes it off to the TCPServer class
+ * @param argv - Array of strings containing 
+ */
 	public static void main(String argv[])
 	{
 		//check if the port has been passed in

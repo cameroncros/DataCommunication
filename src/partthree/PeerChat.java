@@ -2,10 +2,13 @@ package partthree;
 
 /**
  * Main class of the P2P chat program
- * @author cameron
+ * @author  Cameron Cross 7193432
  */
 public class PeerChat {
-	public static void main(String args[])  {
+	/**
+	 * Sets up the listener and sender classes
+	 */
+	public static void main()  {
 
 
 
