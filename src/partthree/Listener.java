@@ -10,11 +10,9 @@ public class Listener extends Thread {
 	ServerSocket welcomeSocket = null;
 	
 	Listener () {
-		
-		
 		try {
-		welcomeSocket = new ServerSocket( Constants.port);
-		
+			//opens a socket and listens on it
+			welcomeSocket = new ServerSocket(Constants.port);
 		} 
 		catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
@@ -24,6 +22,7 @@ public class Listener extends Thread {
 	
 	void finalise() {
 		try {
+			//closes the socket
 			welcomeSocket.close();
 		}
 		catch (Exception f) {
@@ -38,8 +37,11 @@ public class Listener extends Thread {
 		{
 			Socket connectionSocket;
 			try {
+				//waits for a connection and creates a new socket for it
 				connectionSocket = welcomeSocket.accept();
+				//pass the socket to a new class to handle listening on this socket
 				Thread rv = new RecvMessage(connectionSocket);
+				//start the thread
 				rv.start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

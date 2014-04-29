@@ -1,33 +1,20 @@
 package partthree;
 
-//import java.io.IOException;
-//import java.security.GeneralSecurityException;
-//
-//import constants.Constants;
-
+/**
+ * Main class of the P2P chat program
+ * @author cameron
+ */
 public class PeerChat {
 	public static void main(String args[])  {
-//		try {
-//			String out = "";
-//			StringEncryption se = new StringEncryption();
-//			se.loadKey(Constants.keyfile);
-//
-//			byte[] by = se.encrypt("Hello World");
-//			System.out.println(new String(by, "UTF-8"));
-//			out = se.decrypt(by);
-//			System.out.println(out);
-//
-//
-//		}
-//		catch (GeneralSecurityException | IOException e) {
-//			System.out.println(e.getLocalizedMessage());
-//			e.printStackTrace();
-//		}
+
 
 
 		System.out.println("Welcome To Peerchat");
+		//creates a thread to listen for all new chat messages
 		Thread listener = new Listener();
+		//starts the listener thread
 		listener.start();
+		//sends data to the other users
 		new Sender();
 	}
 }

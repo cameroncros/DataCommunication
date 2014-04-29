@@ -14,7 +14,7 @@ public class PeerList {
 	private static PeerList instance = null;
 	
 	private PeerList () {
-
+		readFile();
 	}
 	
 	static PeerList getInstance() {
