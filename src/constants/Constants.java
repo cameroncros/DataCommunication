@@ -16,4 +16,6 @@ public class Constants {
 	
 	//the path of the file that contains the key
 	public static File keyfile = new File("key.pem");
+
+	public static String peerfile = "Peers.txt";
 }
