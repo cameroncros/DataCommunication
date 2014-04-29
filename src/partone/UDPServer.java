@@ -24,10 +24,20 @@ public class UDPServer {
 	{
 		//initialises a server port with the default port, and then checks if the user has supplied a real port 
 		int serverport = Constants.port;
-		if (args.length == 1) {
-			serverport = new Integer(args[0]);
-		} else {
-			System.out.println("Expects: [port]");
+		try {
+			if (args.length == 1) {
+				serverport = new Integer(args[0]);
+			} else {
+				System.out.println("Expects: [port]");
+				return;
+			}
+			if (serverport < 0 || serverport > 65535) {
+				throw new Exception();
+			}
+		}
+		catch (Exception e) {
+			System.out.println("Port is not a valid number");
+			return;
 		}
 		DatagramSocket serverSocket;
 		/**
@@ -54,17 +64,21 @@ public class UDPServer {
 				serverSocket.receive(receivePacket);     
 				//the following code should be placed into a worker thread, but for a simple program this is not necessary
 				//interpret the packet into a string
-				String sentence = new String( receivePacket.getData());     
+				//The trim part removes the excess empty space at the end of the string.
+				String sentence = (new String( receivePacket.getData(), "UTF-8")).trim();     
 				//printout what we received
-				System.out.println("RECEIVED: " + sentence);  
+				System.out.println("RECEIVED: " + sentence);
+				//get the users id and name ( everything after 32 character, weak protocol, but it is mine to control)
+				String user = sentence.substring(32);
 				//get the address of the other end so that we can respond
 				InetAddress IPAddress = receivePacket.getAddress(); 
 				//get the port as well
 				int port = receivePacket.getPort();        
 				//the following string is the response from the server
-				sentence = "Hello, my name is Cameron's Plagerised UDP Server And my Id is 7193432"; 
+				System.out.println(user.length());
+				sentence = "Hello, " + user + ", I am Cameron Crosses server."; 
 				//convert it into a byte array
-				sendData = sentence.getBytes();      
+				sendData = sentence.getBytes("UTF-8");      
 				//create the datagram packet with the other ends ipaddress and port, and the data the we want to send
 				DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);  
 				//send the packet and re begin loop

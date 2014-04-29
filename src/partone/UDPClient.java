@@ -24,9 +24,18 @@ public class UDPClient {
 		String addr = "localhost";
 		Integer port = Constants.port;
 		//checks if the correct amount of arguements are supplied and sets the variables accordingly
-		if (args.length != 2) {
+		if (args.length == 2) {
 			addr = args[0];
-			port = new Integer(args[1]);
+			try {
+				port = new Integer(args[1]);
+				if (port < 0 || port > 65535) {
+					throw new Exception();
+				}
+			}
+			catch (Exception e) {
+				System.out.println("Port is not a valid integer");
+				return;
+			}
 		} else {
 			System.out.println("Expects: [address] [port]");
 			return;
@@ -40,7 +49,7 @@ public class UDPClient {
 			byte[] sendData = new byte[1024];       
 			byte[] receiveData = new byte[1024];  
 			//this is the request to the server;
-			String sentence = "Hello Server, who are you? I am 7193432";
+			String sentence = "Hello Server, who are you? I am Cameron Cross, 7193432";
 			//places the servers sentence into the buffer
 			sendData = sentence.getBytes(); 
 			//creates a datagram packet and puts sentence into the packet. It addresses the packet to the IPAddress looked up before, and the port declared before
@@ -52,7 +61,7 @@ public class UDPClient {
 			//start listening for a packet, and blocks until it receives one.
 			clientSocket.receive(receivePacket);   
 			//interprets the packet payload into a string
-			String modifiedSentence = new String(receivePacket.getData());
+			String modifiedSentence = new String(receivePacket.getData(), "UTF-8");
 			//prints the payload sentence
 			System.out.println("FROM SERVER:" + modifiedSentence);   
 			//closes the socket
