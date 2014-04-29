@@ -10,7 +10,9 @@ class TCPServer extends Thread {
 
 	TCPServer (String port) {
 		try {
+			//convert the port to an int, this is allowed to fail as it is assumed that the user will actually put in a correct port
 			int pt = new Integer(port);
+			//create a socket on the port
 			welcomeSocket = new ServerSocket(pt);
 
 		} 
@@ -22,6 +24,7 @@ class TCPServer extends Thread {
 
 	void finalise() {
 		try {
+			//close the socket
 			welcomeSocket.close();
 		}
 		catch (Exception f) {
@@ -37,9 +40,13 @@ class TCPServer extends Thread {
 		try {
 			while(true)
 			{
+				//wait for a connection, and then accept it.
 				connectionSocket = welcomeSocket.accept();
+				//pass off the new socket to a SendFile instance that will handle the file transfer
 				Thread rv = new SendFile(connectionSocket);
+				//start the SendFile instance and go back to listening
 				rv.start();
+				
 			}
 		}
 		catch (IOException e) {
@@ -50,9 +57,13 @@ class TCPServer extends Thread {
 
 	public static void main(String argv[])
 	{
+		//check if the port has been passed in
 		if (argv.length == 1) {
+			//create the file server instance
 			TCPServer ts = new TCPServer(argv[0]);
 			ts.start();
+		} else {
+			System.out.println("Requires a port as the arguement");
 		}
 	}
 }

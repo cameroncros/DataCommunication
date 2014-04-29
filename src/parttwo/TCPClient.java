@@ -1,6 +1,5 @@
 package parttwo;
 
-import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.FileOutputStream;
@@ -9,6 +8,15 @@ import java.net.Socket;
 
 import constants.Constants;
 
+/**
+ * Code copied from: http://systembash.com/content/a-simple-java-tcp-server-and-tcp-client/
+ * Accessed 29/Apr/14
+ * Code copied from: http://www.javapractices.com/topic/TopicAction.do?Id=245
+ * Accessed 29/Apr/14
+ * @author cameron
+ *
+ */
+
 public class TCPClient {
 	Socket clientSocket = null;
 	DataOutputStream outToServer = null;
@@ -16,49 +24,60 @@ public class TCPClient {
 
 	TCPClient(String address, String port) {
 		try {
+			//convert string to int for port
 			int pt = new Integer(port);
+			//open a socket to the address and port given
 			clientSocket = new Socket(address, pt);
+			//create input and output streams for the socket
 			outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			inFromServer = new DataInputStream(clientSocket.getInputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-	void send(String message) {
+// requests the file from the server and writes it to the disk
+	void requestFile(String message) {
 		byte[] utf8Bytes;
 		byte[] fileBytes = new byte[100];
 		long fileLength;
 		long temp;
 		FileOutputStream output = null;
 		try {
+			//convert filename to UTF-8 encoded bytes
 			utf8Bytes = message.getBytes("UTF-8");
+			//write the length of the string to the socket
 			outToServer.writeInt(utf8Bytes.length);
+			//write the filename to the socket
 			outToServer.write(utf8Bytes, 0, utf8Bytes.length);
 
 
-
+			//read a long from the server. This is the incoming number of bytes that the file takes
 			fileLength = inFromServer.readLong();
 			temp = fileLength;
 
 			//http://www.javapractices.com/topic/TopicAction.do?Id=245
+			//open a file output stream, append "new" to the file so that it doesnt overwrite the file when run on the same machine
 			output = new FileOutputStream(message+"new");
 
+			
 			while (fileLength != 0) {
+				//determine the amount of file to read this one time. Altering chucksize might make this more efficient
 				int chunk = Constants.chunkSize;
+				//check if we are near the end and only read the remaining portion of the file if we are
 				if (fileLength < Constants.chunkSize) {
 					chunk=(int)fileLength;
 				}
+				//read the file data from the socket
 				temp = inFromServer.read(fileBytes, 0, chunk);
+				//decrement the total length of the file remaining in the socket
 				fileLength-=temp;
+				//write the file data to the file
 				output.write(fileBytes, 0, chunk);
 
 
 			}
+			//close file
 			output.close();
-
-
-
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -68,7 +87,12 @@ public class TCPClient {
 
 	public static void main(String[] argv) {
 		if (argv.length == 3) {
-			new TCPClient(argv[0], argv[1]).send(argv[2]);
-		}	
+			//create and initialise the TCPClient object
+			TCPClient tc = new TCPClient(argv[0], argv[1]);
+			//request a file
+			tc.requestFile(argv[2]);
+		} else {
+			System.out.println("expected: [addr] [port] [filename]");
+		}
 	}
 }
