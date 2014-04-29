@@ -11,7 +11,8 @@ public class Sender {
 	Map<String, SendMessage> peerSender = new HashMap<String, SendMessage>();
 	
 	Sender() {
-		peers = new PeerList();
+		peers = PeerList.getInstance();
+		peers.readFile();
 		SendLoop();
 	}
 	//http://alvinalexander.com/java/edu/pj/pj010005

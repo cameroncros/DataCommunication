@@ -15,17 +15,24 @@ public class RecvMessage extends Thread {
 	DataInputStream inFromServer;
 	Boolean auth = true;
 	Vector<String> peers;
-	
+	Vector<String> invalid;
 	StringEncryption se;
 	
 	RecvMessage(Socket sock) {
-		peers = (new PeerList()).getPeers();
+		//get a list of peers from the peerlist class
+		PeerList pl = PeerList.getInstance();
+		pl.readFile();
+		peers = pl.getPeers();
+		invalid = pl.getInvalidPeers();
 		socket = sock;
 		try {
 			String ipaddr = socket.getInetAddress().getHostAddress();
-			if (!peers.contains(ipaddr)) {
-				System.out.println("Connection from an invalid host: " + ipaddr);
+			if (!invalid.contains(ipaddr)) {
 				auth = false;
+			} else if (!peers.contains(ipaddr)) {
+				pl.addInvalid(ipaddr);
+				System.out.println("Unauthorized chat request from <IP " + ipaddr + ">");
+				
 			}
 			
 			inFromServer = new DataInputStream(socket.getInputStream());
