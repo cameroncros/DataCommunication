@@ -38,13 +38,15 @@ public class TCPClient {
  *  requests the file from the server and writes it to the disk
  * @param message - the message to be send
  */
-	void requestFile(String message) {
+	void requestFile(String filename) {
 		byte[] utf8Bytes;
 		byte[] fileBytes = new byte[100];
 		long fileLength;
 		long temp;
 		FileOutputStream output = null;
 		try {
+			//prepend "Read " to the message as requested by the assignement doc
+			String message = "Read " + filename;
 			//convert filename to UTF-8 encoded bytes
 			utf8Bytes = message.getBytes("UTF-8");
 			//write the length of the string to the socket
@@ -56,10 +58,12 @@ public class TCPClient {
 			//read a long from the server. This is the incoming number of bytes that the file takes
 			fileLength = inFromServer.readLong();
 			temp = fileLength;
+			
+			System.out.println(fileLength);
 
 			//http://www.javapractices.com/topic/TopicAction.do?Id=245
 			//open a file output stream, append "new" to the file so that it doesnt overwrite the file when run on the same machine
-			output = new FileOutputStream(message+"new");
+			output = new FileOutputStream(filename+"new");
 
 			
 			while (fileLength != 0) {

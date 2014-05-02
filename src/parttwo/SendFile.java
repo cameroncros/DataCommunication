@@ -62,6 +62,7 @@ public class SendFile extends Thread {
 			}
 			//convert the byte array into the filename
 			filename = new String(sendData, 0, length, "UTF-8");
+			filename = filename.substring(5); //remove "Read " from start of filename
 			
 			//create a file object that will contain details about the file
 			File file = new File(filename);

@@ -75,7 +75,6 @@ public class UDPServer {
 				//get the port as well
 				int port = receivePacket.getPort();        
 				//the following string is the response from the server
-				System.out.println(user.length());
 				sentence = "Hello, " + user + ", I am Cameron Crosses server."; 
 				//convert it into a byte array
 				sendData = sentence.getBytes("UTF-8");      
