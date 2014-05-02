@@ -8,11 +8,13 @@ public class PeerChat {
 	/**
 	 * Sets up the listener and sender classes
 	 */
-	public static void main()  {
+	public static void main(String[] args)  {
 
 
 
 		System.out.println("Welcome To Peerchat");
+		//print all available peers
+		PeerList.getInstance().printPeers(); 
 		//creates a thread to listen for all new chat messages
 		Thread listener = new Listener();
 		//starts the listener thread

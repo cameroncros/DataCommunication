@@ -2,6 +2,7 @@ package partthree;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.NoRouteToHostException;
 import java.net.Socket;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
@@ -18,12 +19,18 @@ public class SendMessage {
 	Boolean me = false;
 	StringEncryption se;
 	Boolean connected = true;
+	String addr = "";
 	/**
 	 * Sets up the socket and checks if it is correct
 	 * @param address - The address to send the message to
 	 */
 	SendMessage(String address) {
+		addr = address;
 		try {
+			//create a string encryption object and load the key
+			se = new StringEncryption();
+			se.loadKey(Constants.keyfile);
+
 			//create socket to address and port given
 			clientSocket = new Socket(address, Constants.port);
 			//create output stream for socket
@@ -37,9 +44,9 @@ public class SendMessage {
 			if (local.compareTo(other) == 0) {
 				me = true;
 			}
-			//create a string encryption object and load the key
-			se = new StringEncryption();
-			se.loadKey(Constants.keyfile);
+
+		} catch (NoRouteToHostException e) {
+			connected = false;
 		} catch (IOException | GeneralSecurityException e) {
 			connected = false;
 			e.printStackTrace();
@@ -53,6 +60,9 @@ public class SendMessage {
 		byte[] utf8Bytes;
 		//check if we are talking to ourselves and exit if we are
 		if (me) {
+			return;
+		}
+		if (connected == false) {
 			return;
 		}
 		try {

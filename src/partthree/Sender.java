@@ -50,7 +50,7 @@ public class Sender {
 				//get all the peers
 				peers.readFile();
 				//loop through peers
-				for (String f : peers.getPeers()) {
+				for (String f : peers.getPeers().keySet()) {
 					//check if there is a class to send to this peer and if there is, check that it is connected still
 					if (peerSender.containsKey(f) != true || peerSender.get(f).isConnected() == false) {
 						peerSender.remove(f);

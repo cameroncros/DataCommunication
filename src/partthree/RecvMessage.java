@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
+import java.util.HashMap;
 import java.util.Vector;
 
 import constants.Constants;
@@ -18,13 +19,13 @@ public class RecvMessage extends Thread {
 	Socket socket;
 	DataInputStream inFromServer;
 	Boolean auth = true;
-	Vector<String> peers;
+	HashMap<String,String> peers;
 	Vector<String> invalid;
 	StringEncryption se;
-/**
- * 
- * @param sock - The socket to receive from
- */
+	/**
+	 * 
+	 * @param sock - The socket to receive from
+	 */
 	RecvMessage(Socket sock) {
 		//get a list of peers from the peerlist class
 		PeerList pl = PeerList.getInstance();
@@ -37,13 +38,14 @@ public class RecvMessage extends Thread {
 			//get the ip address of the socket
 			String ipaddr = socket.getInetAddress().getHostAddress();
 			//check if it is invalid and has tried before
-			if (!invalid.contains(ipaddr)) {
+			if (!peers.containsKey(ipaddr)) {
 				auth = false;
 				//check if it is a first time invalid
-			} else if (!peers.contains(ipaddr)) {
-				pl.addInvalid(ipaddr);
-				System.out.println("Unauthorized chat request from <IP " + ipaddr + ">");
+				if (invalid.contains(ipaddr)) {
+					pl.addInvalid(ipaddr);
+					System.out.println("Unauthorized chat request from <IP " + ipaddr + ">");
 
+				}
 			}
 			//create an input stream for the socket. output is unnecessary
 			inFromServer = new DataInputStream(socket.getInputStream());
@@ -56,9 +58,9 @@ public class RecvMessage extends Thread {
 			e.printStackTrace();
 		}
 	}
-/**
- * listens on the socket and receive the message
- */
+	/**
+	 * listens on the socket and receive the message
+	 */
 	@Override
 	public void run() {
 		int length = 0;
@@ -74,8 +76,8 @@ public class RecvMessage extends Thread {
 			return;
 		}
 		//loop forever as we want to wait for everything
-		while (true) {
-			try {
+		try {
+			while (true) {
 				length = 0;
 				while (length == 0) {
 					//read an int, this will be the length of the next message
@@ -91,17 +93,19 @@ public class RecvMessage extends Thread {
 				}
 				//decrypt the bytes into a string using the StringEncryption class
 				modifiedSentence = se.decrypt(sendData);
+				//get address
+				String address = socket.getInetAddress().toString().substring(1);
+
 				//print message
-				System.out.println("<" + socket.getInetAddress() + ">: " + modifiedSentence);
 
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvalidKeyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println(peers.get(address) + " <" + address + ">: " + modifiedSentence);
 			}
-
-		}		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
