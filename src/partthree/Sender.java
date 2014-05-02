@@ -52,8 +52,7 @@ public class Sender {
 				//loop through peers
 				for (String f : peers.getPeers().keySet()) {
 					//check if there is a class to send to this peer and if there is, check that it is connected still
-					if (peerSender.containsKey(f) != true || peerSender.get(f).isConnected() == false) {
-						peerSender.remove(f);
+					if (peerSender.containsKey(f) != true) {
 						//create a new class to be used to send to that peer
 						peerSender.put(f, new SendMessage(f));
 					}
