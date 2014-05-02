@@ -1,6 +1,7 @@
 package partthree;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 import java.security.GeneralSecurityException;
@@ -100,6 +101,8 @@ public class RecvMessage extends Thread {
 
 				System.out.println(peers.get(address) + " <" + address + ">: " + modifiedSentence);
 			}
+		}  catch (EOFException e) {
+			//do nothing here, simply means that the other end has dissappeared
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

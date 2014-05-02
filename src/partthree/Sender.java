@@ -44,7 +44,7 @@ public class Sender {
 				//read a message
 				message = br.readLine();
 				//check if the message is /quit and exit in that case
-				if (message.compareTo("/quit") == 0) {
+				if (message == null || message.compareTo("/quit") == 0) {
 					System.exit(0);
 				}
 				//get all the peers

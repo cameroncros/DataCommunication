@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.NoRouteToHostException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 import java.util.LinkedList;
@@ -118,7 +119,11 @@ public class SendMessage extends Thread {
 					outToServer.write(utf8Bytes, 0, utf8Bytes.length);
 					//remove message from queue as we were successful at this point
 					messageQueue.remove();
-				} catch (IOException |InvalidKeyException e) {
+				} catch (SocketException e) {
+					connected = false;
+					//do nothing, this means tha the other end has disconnected
+				}
+				catch (IOException |InvalidKeyException e) {
 					connected = false;
 					// TODO Auto-generated catch block
 					e.printStackTrace();
