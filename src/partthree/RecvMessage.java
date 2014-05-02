@@ -41,7 +41,7 @@ public class RecvMessage extends Thread {
 			if (!peers.containsKey(ipaddr)) {
 				auth = false;
 				//check if it is a first time invalid
-				if (invalid.contains(ipaddr)) {
+				if (!invalid.contains(ipaddr)) {
 					pl.addInvalid(ipaddr);
 					System.out.println("Unauthorized chat request from <IP " + ipaddr + ">");
 
