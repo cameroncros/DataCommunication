@@ -86,11 +86,11 @@ public class SendFile extends Thread {
 					chunk=(int)fileLength;
 				}
 				//read a "chunl" sized portion of the file
-				input.read(fileBytes, 0, chunk);
+				int temp = input.read(fileBytes, 0, chunk);
 				//write the portion of the file out to the socket
-				outToClient.write(fileBytes, 0, chunk);
+				outToClient.write(fileBytes, 0, temp);
 				//decrement the size of the file left to be sent
-				fileLength-=chunk;
+				fileLength-=temp;
 
 			}
 			//close the file stream

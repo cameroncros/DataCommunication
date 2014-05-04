@@ -42,7 +42,7 @@ public class TCPClient {
 		byte[] utf8Bytes;
 		byte[] fileBytes = new byte[100];
 		long fileLength;
-		long temp;
+		int temp;
 		FileOutputStream output = null;
 		try {
 			//prepend "Read " to the message as requested by the assignement doc
@@ -57,7 +57,6 @@ public class TCPClient {
 
 			//read a long from the server. This is the incoming number of bytes that the file takes
 			fileLength = inFromServer.readLong();
-			temp = fileLength;
 			
 			System.out.println(fileLength);
 
@@ -73,12 +72,12 @@ public class TCPClient {
 				if (fileLength < Constants.chunkSize) {
 					chunk=(int)fileLength;
 				}
-				//read the file data from the socket
+				//read the file data from the socket, returns amount of data read
 				temp = inFromServer.read(fileBytes, 0, chunk);
 				//decrement the total length of the file remaining in the socket
 				fileLength-=temp;
 				//write the file data to the file
-				output.write(fileBytes, 0, chunk);
+				output.write(fileBytes, 0, temp);
 
 
 			}
