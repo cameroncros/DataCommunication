@@ -3,6 +3,7 @@ package partthree;
 /**
  * Main class of the P2P chat program
  * @author  Cameron Cross 7193432
+ * @since 14 April 2014
  */
 public class PeerChat {
 	/**

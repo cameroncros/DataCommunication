@@ -14,7 +14,7 @@ import constants.Constants;
 /**
  * Handles sending the message to a host
  * @author  Cameron Cross 7193432
- *
+ * @since 14 April 2014
  */
 public class SendMessage extends Thread {
 	Socket clientSocket = null;

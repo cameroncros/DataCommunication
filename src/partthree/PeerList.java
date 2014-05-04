@@ -13,7 +13,7 @@ import constants.Constants;
 /**
  * Singleton containing the peers and invalid peers - Singleton design is not the best, but seems better than passing it down to everything
  * @author  Cameron Cross 7193432
- *
+ * @since 14 April 2014
  */
 public class PeerList {
 	private static HashMap<String, String> peers = new HashMap<String, String>(); //ip address is key, name is value

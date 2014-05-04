@@ -26,8 +26,8 @@ import java.io.File;
  * http://www.macs.hw.ac.uk/~ml355/lore/FileEncryption.java
  * Described here: http://www.macs.hw.ac.uk/~ml355/lore/pkencryption.htm
  * Heavily modifed so that in encrypts strings to byte arrays, and decrypts bytearrays to strings
-* @author Cameron Cross 7193432
- * 
+ * @author Cameron Cross 7193432
+ * @since 14 April 2014
  */
 public class StringEncryption {
 

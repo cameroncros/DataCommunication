@@ -13,7 +13,7 @@ import constants.Constants;
 /**
  * Class that handles receiving messages
  * @author  Cameron Cross 7193432
- *
+ * @since 14 April 2014
  */
 public class RecvMessage extends Thread {
 

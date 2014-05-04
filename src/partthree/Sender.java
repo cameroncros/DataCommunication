@@ -9,8 +9,8 @@ import java.util.Map;
 /**
  * Code copied from: http://alvinalexander.com/java/edu/pj/pj010005
  * Accessed 16/4/14 - Modified BufferedReader code
-* @author Cameron Cross 7193432
- *
+ * @author Cameron Cross 7193432
+ * @since 16 April 2014
  */
 public class Sender {
 	PeerList peers = null;

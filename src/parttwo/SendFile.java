@@ -13,7 +13,7 @@ import constants.Constants;
  * Code Borrowed From: //http://www.javapractices.com/topic/TopicAction.do?Id=245
  * Accessed 14 April 2014
  * @author  Cameron Cross 7193432
- *
+ * @since 14 April 2014
  */
 
 public class SendFile extends Thread {
