@@ -31,34 +31,49 @@ public class TCPClient {
 			//create input and output streams for the socket
 			outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			inFromServer = new DataInputStream(clientSocket.getInputStream());
+			sendRequest(MessageType.HELLO, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	void sendData(MessageType mess, Vector<String> values) {
-		byte[] utf8Bytes = null;
+	Vector<String> sendRequest(MessageType mess, Vector<String> values) {
+		Vector<String> output = new Vector<String>();
 		try {
+			//Send request
 			switch (mess) {
 			case HELLO: //tell the server I am here
 			case BYE: //tell the server i am leaving
-				utf8Bytes = null;
+				outToServer.writeInt(mess.value);
 				break;
 			case FIND: // give me a list of peers with the file
 			case SEARCH: // give me a list of files that match my string
 			case TELL: //Here are the files I have
 			case GIVE:
-				utf8Bytes = encodeArrayOfStrings(values);
+				outToServer.writeInt(mess.value);
+				Constants.sendArrayOfStrings(outToServer, values);
 				break;
 			default:
 				throw new Exception("Invalid Value");
 			}
-
-			outToServer.writeShort(mess.value);
-
-			if (utf8Bytes != null) {
-				outToServer.write(utf8Bytes, 0, utf8Bytes.length);
+			
+			//get output, for requests that actually have an output
+			switch (mess) {
+			case HELLO: //tell the server I am here
+			case BYE: //tell the server i am leaving
+			case TELL: //Here are the files I have
+				return null;
+			case FIND: // give me a list of peers with the file
+			case SEARCH: // give me a list of files that match my string
+			case GIVE:
+				output = Constants.readArrayOfStrings(inFromServer);
+				return output;
+			default:
+				throw new Exception("Invalid Value");
 			}
+			
+			
+
 		}
 		catch (IOException e) {
 			System.err.println(e.getMessage());
@@ -66,6 +81,7 @@ public class TCPClient {
 		catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		return values;
 	}
 
 
@@ -115,16 +131,6 @@ public class TCPClient {
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * Reads a vector of strings
-	 * @return
-	 */
-	public Vector<String> readArrayOfString() {
-		// TODO
-		return null;
-	}
-	public byte[] encodeArrayOfStrings(Vector<String> values) {
-		return null;
-	}
+
 
 }
