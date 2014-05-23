@@ -20,7 +20,7 @@ public class Client {
 			System.exit(1);
 		}
 		files = new MusicScanner(argc[1]);
-		FileServer td = new FileServer(Constants.port);
+		FileServer td = new FileServer(Constants.port, argc[1]);
 		td.start();
 
 		comm = new TCPClient(argc[0],Constants.serverport);
@@ -52,7 +52,7 @@ public class Client {
 				case "/quit":
 					comm.sendRequest(MessageType.BYE, null);
 					running = false;
-					break;
+					System.exit(0);
 				case "/get":
 					try {
 						int val = new Integer(parts[1]);
@@ -62,7 +62,7 @@ public class Client {
 						inputs.add(parts[1]);
 					}
 					output = comm.sendRequest(MessageType.FIND, inputs);
-					getFile(parts[1], output);
+					getFile(inputs.firstElement(), output);
 					updateServer();
 					break;
 				case "/search":
@@ -108,6 +108,7 @@ public class Client {
 				return;
 			}
 			catch (Exception e) {
+				e.printStackTrace();
 				System.out.println("Something went wrong with host: "+host+", Trying another...");
 			}
 		}

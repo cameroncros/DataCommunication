@@ -21,12 +21,14 @@ public class SendFile extends Thread {
 	Socket socket;
 	DataInputStream inFromServer;
 	DataOutputStream outToClient;
+	String path;
 /**
  * 
  * @param sock - the socket associated with the client
+ * @param directory 
  */
-	SendFile(Socket sock) {
-
+	SendFile(Socket sock, String directory) {
+		path = directory;
 		socket = sock;
 		try {
 			//creates an input stream from the socket passed in
@@ -62,8 +64,8 @@ public class SendFile extends Thread {
 			}
 			//convert the byte array into the filename
 			filename = new String(sendData, 0, length, "UTF-8");
-			filename = filename.substring(5); //remove "Read " from start of filename
-			
+			//prepend path
+			filename = path+File.separator+filename; 
 			//create a file object that will contain details about the file
 			File file = new File(filename);
 			//check if the file exists at the server and close the socket if it doesnt

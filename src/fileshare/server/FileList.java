@@ -33,17 +33,16 @@ public class FileList {
 
 	void saveFileList() {
 		try {
-			FileWriter fw = new FileWriter(new File("files.txt"));
+			
 			for (String server : clientsFiles.keySet()) {
-				fw.write(server);
-				fw.write("\n");
+				FileWriter fw = new FileWriter(new File(server + ".files"));
 				for (String file : clientsFiles.get(server)) {
-					fw.write("\t");
 					fw.write(file);
 					fw.write("\n");
 				}
+				fw.close();
 			}
-			fw.close();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

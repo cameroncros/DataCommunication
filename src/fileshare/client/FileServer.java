@@ -13,15 +13,17 @@ import fileshare.client.SendFile;
 class FileServer extends Thread {
 
 	ServerSocket welcomeSocket = null;
+	String directory = null;
 	/**
 	 * This function sets up the TCPServer class
 	 * @param port - String containing the port
+	 * @param path 
 	 */
-	FileServer (int port) {
+	FileServer (int port, String path) {
 		try {
 			//create a socket on the port
 			welcomeSocket = new ServerSocket(port);
-
+			directory = path;
 		} 
 		catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
@@ -54,7 +56,7 @@ class FileServer extends Thread {
 				//wait for a connection, and then accept it.
 				connectionSocket = welcomeSocket.accept();
 				//pass off the new socket to a SendFile instance that will handle the file transfer
-				Thread rv = new SendFile(connectionSocket);
+				Thread rv = new SendFile(connectionSocket, directory);
 				//start the SendFile instance and go back to listening
 				rv.start();
 

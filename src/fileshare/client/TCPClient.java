@@ -32,6 +32,7 @@ public class TCPClient {
 			outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			inFromServer = new DataInputStream(clientSocket.getInputStream());
 			sendRequest(MessageType.HELLO, null);
+			System.out.println("Connected To Server");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

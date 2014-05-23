@@ -32,10 +32,8 @@ public class GetFile {
 		int temp;
 		FileOutputStream output = null;
 		
-		//prepend "Read " to the message as requested by the assignement doc
-		String message = file;
 		//convert filename to UTF-8 encoded bytes
-		utf8Bytes = message.getBytes("UTF-8");
+		utf8Bytes = file.getBytes("UTF-8");
 		//write the length of the string to the socket
 		outToServer.writeInt(utf8Bytes.length);
 		//write the filename to the socket
@@ -65,7 +63,7 @@ public class GetFile {
 			fileRemaining-=temp;
 			//write the file data to the file
 			output.write(fileBytes, 0, temp);
-			printProgress((fileLength-fileRemaining)/fileLength, file);
+			printProgress(((float)fileLength-(float)fileRemaining)/(float)fileLength, file);
 
 
 		}
@@ -74,7 +72,7 @@ public class GetFile {
 	}
 	
 	void printProgress(float percentage, String file) {
-		System.out.print(file + ": " + percentage + "%\r");
+		System.out.print(file + ": " + percentage*100 + "%\r");
 	}
 
 }
