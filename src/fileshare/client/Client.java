@@ -13,14 +13,16 @@ public class Client {
 	MusicScanner files;
 	TCPClient comm;
 	BufferedReader br = null;
+	String dir = null;
 
 	public Client(String[] argc) {
 		if (argc.length != 2) {
 			System.out.println("Expects [addr] [dir]");
 			System.exit(1);
 		}
-		files = new MusicScanner(argc[1]);
-		FileServer td = new FileServer(Constants.port, argc[1]);
+		dir = argc[1];
+		files = new MusicScanner(dir);
+		FileServer td = new FileServer(Constants.port, dir);
 		td.start();
 
 		comm = new TCPClient(argc[0],Constants.serverport);
@@ -76,7 +78,12 @@ public class Client {
 						i++;
 					}
 					break;
+				case "/help":
 				default:
+					System.out.println("Available commands:");
+					System.out.println("\t/search - Search for files");
+					System.out.println("\t/get - get the file either by name or the index of the search");
+					System.out.println("\t/quit - quit");
 					break;
 				}
 			} catch (IOException e) {
@@ -102,7 +109,7 @@ public class Client {
 				int rand = (int) Math.floor((Math.random()*hosts.size()));
 				host = hosts.get(rand);
 				hosts.remove(rand);
-				GetFile pr = new GetFile(host);
+				GetFile pr = new GetFile(host, dir);
 				pr.getFile(file);
 				System.out.println("Successfully got your file: "+file);
 				return;

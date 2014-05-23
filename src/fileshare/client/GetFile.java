@@ -2,6 +2,7 @@ package fileshare.client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -12,9 +13,11 @@ public class GetFile {
 	Socket clientSocket = null;
 	DataOutputStream outToServer = null;
 	DataInputStream inFromServer = null;
+	String directory = null;
 	
-	public GetFile(String address) throws Exception {
+	public GetFile(String address, String dir) throws Exception {
 		try {
+			directory = dir;
 			//open a socket to the address and port given
 			clientSocket = new Socket(address, Constants.port);
 			//create input and output streams for the socket
@@ -47,7 +50,7 @@ public class GetFile {
 
 		//http://www.javapractices.com/topic/TopicAction.do?Id=245
 		//open a file output stream, append "new" to the file so that it doesnt overwrite the file when run on the same machine
-		output = new FileOutputStream(file);
+		output = new FileOutputStream(directory+File.separatorChar+file);
 
 		
 		while (fileRemaining != 0) {
