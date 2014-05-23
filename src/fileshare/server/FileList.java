@@ -17,6 +17,9 @@ public class FileList {
 	}
 	void DeleteClient(String host) {
 		clientsFiles.remove(host);
+		deleteFiles(host);
+	}
+	private void deleteFiles(String host) {
 		allFiles.clear();
 		clientsFiles.remove(host);
 		for (String server : clientsFiles.keySet()) {
@@ -47,6 +50,7 @@ public class FileList {
 	}
 	
 	void addFiles(String host, Vector<String> files) {
+		deleteFiles(host);
 		Vector<String> hosts = clientsFiles.get(host);
 		if (hosts != null) {
 			for (String filename : files) {
