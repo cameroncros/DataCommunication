@@ -17,14 +17,11 @@ public class FileList {
 	}
 	void DeleteClient(String host) {
 		clientsFiles.remove(host);
-	}
-	
-	void removeClientsFiles(String host) {
 		allFiles.clear();
 		clientsFiles.remove(host);
 		for (String server : clientsFiles.keySet()) {
 			for (String file : clientsFiles.get(server)) {
-				if (allFiles.contains(file)) {
+				if (!allFiles.contains(file)) {
 					allFiles.add(file);
 				}
 			}

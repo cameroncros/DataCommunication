@@ -22,6 +22,7 @@ public class TCPClient {
 	Socket clientSocket = null;
 	DataOutputStream outToServer = null;
 	DataInputStream inFromServer = null;
+	String myip;
 
 	
 	TCPClient(String address, int port) {
@@ -33,6 +34,7 @@ public class TCPClient {
 			inFromServer = new DataInputStream(clientSocket.getInputStream());
 			sendRequest(MessageType.HELLO, null);
 			System.out.println("Connected To Server");
+			myip = clientSocket.getInetAddress().getHostAddress();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

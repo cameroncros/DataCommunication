@@ -26,6 +26,7 @@ public class HandleClient extends Thread {
 			outToClient = new DataOutputStream(clientSocket.getOutputStream());
 			inFromClient = new DataInputStream(clientSocket.getInputStream());
 			connected = true;
+			System.out.println(ipaddr + " connected;");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,7 +46,6 @@ public class HandleClient extends Thread {
 				break;
 			case BYE: //tell the server i am leaving
 				files.DeleteClient(ipaddr);
-				files.removeClientsFiles(ipaddr);
 				break;
 			case FIND: // give me a list of peers with the file
 				values = Constants.readArrayOfStrings(inFromClient);
@@ -70,7 +70,8 @@ public class HandleClient extends Thread {
     	}
     	}
     	catch (IOException e) {
-    		e.printStackTrace();
+    		files.DeleteClient(ipaddr);
+    		System.out.println(ipaddr + " disconnected;");
     	}
     }
 

@@ -42,6 +42,7 @@ public class Client {
 		String[] parts;
 		boolean running = true;
 		Vector<String> results = null;
+		int i;
 		while (running) {
 			try {
 				stringinput = br.readLine();
@@ -64,25 +65,37 @@ public class Client {
 						inputs.add(parts[1]);
 					}
 					output = comm.sendRequest(MessageType.FIND, inputs);
+					i=1;
+					for (String peers : output) {
+						System.out.println(i+") "+peers);
+						i++;
+					}
 					getFile(inputs.firstElement(), output);
 					updateServer();
 					break;
 				case "/search":
-					for (int i = 1; i < parts.length; i++) {
+					for (i = 1; i < parts.length; i++) {
 						inputs.add(parts[i]);
 					}
 					results = comm.sendRequest(MessageType.SEARCH, inputs);
-					int i = 1;
+					for (String file : files.getFileList()) {
+						results.remove(file);
+					}
+					i=1;
 					for (String files : results) {
 						System.out.println(i+") "+files);
 						i++;
 					}
+					break;
+				case "/update":
+					updateServer();
 					break;
 				case "/help":
 				default:
 					System.out.println("Available commands:");
 					System.out.println("\t/search - Search for files");
 					System.out.println("\t/get - get the file either by name or the index of the search");
+					System.out.println("\t/update - update the servers list of files");
 					System.out.println("\t/quit - quit");
 					break;
 				}
@@ -99,6 +112,9 @@ public class Client {
 	}
 
 	private void getFile(String file, Vector<String> hosts) {
+		if (files.getFileList().contains(file)) {
+			System.out.println("You already have this file");
+		}
 		if (hosts == null || hosts.size() == 0) {
 			System.out.println("Couldnt find any hosts with that file");
 			return;
@@ -109,8 +125,10 @@ public class Client {
 				int rand = (int) Math.floor((Math.random()*hosts.size()));
 				host = hosts.get(rand);
 				hosts.remove(rand);
-				GetFile pr = new GetFile(host, dir);
-				pr.getFile(file);
+				if (host.compareTo(comm.myip) != 0) {
+					GetFile pr = new GetFile(host, dir);
+					pr.getFile(file);
+				}
 				System.out.println("Successfully got your file: "+file);
 				return;
 			}
