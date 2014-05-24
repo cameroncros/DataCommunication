@@ -2,7 +2,11 @@ package fileshare.client;
 
 import java.io.File;
 import java.util.Vector;
-
+/**
+ * Class to scan directory for files.
+ * @author Cameron
+ *
+ */
 public class MusicScanner {
 	String path;
 	private static Vector<String> files = new Vector<String>();
@@ -12,6 +16,9 @@ public class MusicScanner {
 		scanDirectory();
 	}
 
+	/**
+	 * scan the directory
+	 */
 	void scanDirectory() {
 		File dir = new File(path);
 		for (File d : dir.listFiles()) {
@@ -23,7 +30,10 @@ public class MusicScanner {
 			}
 		}
 	}
-
+	/**
+	 * give a vector containing the files
+	 * @return files vector
+	 */
 	Vector<String> getFileList() {
 		return files;
 	}

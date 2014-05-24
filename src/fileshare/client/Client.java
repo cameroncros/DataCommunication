@@ -7,7 +7,11 @@ import java.util.Vector;
 
 import constants.Constants;
 import constants.Constants.MessageType;
-
+/**
+ * This is the main class that the client uses
+ * @author Cameron
+ *
+ */
 public class Client {
 
 	MusicScanner files;
@@ -36,7 +40,9 @@ public class Client {
 		new Client(argc);
 
 	}
-
+/**
+ * parses the input from the console and runs the required code
+ */
 	void inputLoop() {
 		String stringinput;
 		String[] parts;
@@ -105,12 +111,18 @@ public class Client {
 			}
 		}
 	}
-	
+	/**
+	 * Sends the server all the files that we have
+	 */
 	private void updateServer() {
 		files.scanDirectory();
 		comm.sendRequest(MessageType.TELL, files.getFileList());
 	}
-
+/**
+ * Gets the file from one of the hosts listed. Hosts are chosen at random
+ * @param file
+ * @param hosts
+ */
 	private void getFile(String file, Vector<String> hosts) {
 		if (files.getFileList().contains(file)) {
 			System.out.println("You already have this file");

@@ -8,14 +8,22 @@ import java.io.IOException;
 import java.net.Socket;
 
 import constants.Constants;
-
+/**
+ * Class to get a file from a client
+ * @author Cameron
+ *
+ */
 public class GetFile {
 	Socket clientSocket = null;
 	DataOutputStream outToServer = null;
 	DataInputStream inFromServer = null;
 	String directory = null;
-	
-	public GetFile(String address, String dir) throws Exception {
+	/**
+	 * sets up the connection
+	 * @param address - host address
+	 * @param dir - directory to save the file to
+	 */
+	public GetFile(String address, String dir) {
 		try {
 			directory = dir;
 			//open a socket to the address and port given
@@ -27,7 +35,11 @@ public class GetFile {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Actually ask the host for the file
+	 * @param file - filename
+	 * @throws Exception - incase something goes wrong throw all exceptions. Doesnt matter what the exception is, if the file wasnt retrieved correctly, then it is a failure.
+	 */
 	public void getFile(String file) throws Exception {
 		byte[] utf8Bytes;
 		byte[] fileBytes = new byte[100];
@@ -73,7 +85,11 @@ public class GetFile {
 		//close file
 		output.close();
 	}
-	
+	/**
+	 * Prints the progress as a percentage.
+	 * @param percentage - percentage we have gotten
+	 * @param file - filename
+	 */
 	void printProgress(float percentage, String file) {
 		System.out.print(file + ": " + percentage*100 + "%\r");
 	}

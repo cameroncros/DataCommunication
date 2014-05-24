@@ -8,7 +8,11 @@ import java.util.Vector;
 
 import constants.Constants;
 import constants.Constants.MessageType;
-
+/**
+ * Listens to the client and returns all the stuff that is requested
+ * @author Cameron
+ *
+ */
 public class HandleClient extends Thread {
 	Socket clientSocket = null;
 	DataOutputStream outToClient = null;
@@ -34,7 +38,9 @@ public class HandleClient extends Thread {
 		
 	}
 	
-	
+	/**
+	 * loops while handling clients inputs
+	 */
     public void run() {
     	Vector<String> values = null, results;
     	try {

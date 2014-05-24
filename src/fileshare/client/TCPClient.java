@@ -40,6 +40,12 @@ public class TCPClient {
 		}
 	}
 
+	/**
+	 * Send the request to the server/peer
+	 * @param mess
+	 * @param values
+	 * @return
+	 */
 	Vector<String> sendRequest(MessageType mess, Vector<String> values) {
 		Vector<String> output = new Vector<String>();
 		try {

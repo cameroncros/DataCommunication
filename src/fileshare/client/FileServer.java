@@ -6,7 +6,7 @@ import java.net.Socket;
 
 import fileshare.client.SendFile;
 /**
- * This is the file server class. It listens for the connections and passes new connections off to send fiule
+ * This is the file server class. It listens for the connections and passes new connections off to send file
  * @author  Cameron Cross 7193432
  * @since 29 April 2014
  */
