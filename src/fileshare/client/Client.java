@@ -88,6 +88,9 @@ public class Client {
 						results.remove(file);
 					}
 					i=1;
+					if (results.size() == 0) {
+						System.out.println("No new files found");
+					}
 					for (String files : results) {
 						System.out.println(i+") "+files);
 						i++;
