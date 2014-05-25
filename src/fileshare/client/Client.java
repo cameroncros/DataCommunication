@@ -87,10 +87,11 @@ public class Client {
 					for (String file : files.getFileList()) {
 						results.remove(file);
 					}
-					i=1;
+					
 					if (results.size() == 0) {
 						System.out.println("No new files found");
 					}
+					i=1;
 					for (String files : results) {
 						System.out.println(i+") "+files);
 						i++;
@@ -99,12 +100,43 @@ public class Client {
 				case "/update":
 					updateServer();
 					break;
+				case "/list":
+					files.scanDirectory();
+					i=1;
+					for (String file : files.getFileList()) {
+						System.out.println(i+") "+file);
+						i++;
+					}
+					break;
+				case "/delete":
+					String deletefile = null;
+					try {
+						int val = new Integer(parts[1]);
+						deletefile = files.getFileList().get(val-1);
+					}
+					catch (Exception e) {
+						deletefile = parts[1];
+					}
+					System.out.println("Delete " + deletefile + "?");
+					stringinput = br.readLine();
+					if (stringinput.contains("y")) {
+						
+						files.deleteFile(deletefile);
+						System.out.println("Deleted: " + deletefile);
+						updateServer();
+					} else {
+						System.out.println("Aborted Delete: " + deletefile);
+					}
+					break;
+					
 				case "/help":
 				default:
 					System.out.println("Available commands:");
 					System.out.println("\t/search - Search for files");
 					System.out.println("\t/get - get the file either by name or the index of the search");
 					System.out.println("\t/update - update the servers list of files");
+					System.out.println("\t/list - print all the files we have");
+					System.out.println("\t/delete - delete a file that we have");
 					System.out.println("\t/quit - quit");
 					break;
 				}

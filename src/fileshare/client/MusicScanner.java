@@ -21,10 +21,12 @@ public class MusicScanner {
 	 */
 	void scanDirectory() {
 		File dir = new File(path);
+		files.clear();
 		for (File d : dir.listFiles()) {
 			if (!d.isDirectory()) {
 				String fname = d.getName();
 				if (fname.endsWith(".mp3")) {
+					if (!files.contains(fname))
 					files.add(fname);
 				}
 			}
@@ -36,5 +38,9 @@ public class MusicScanner {
 	 */
 	Vector<String> getFileList() {
 		return files;
+	}
+	
+	void deleteFile(String fname) {
+		(new File(path+File.separatorChar +fname)).delete();
 	}
 }
