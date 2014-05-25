@@ -45,12 +45,20 @@ public class FileList {
 				}
 			}
 		}
+		saveFileList();
 	}
 	/**
 	 * Save the filelist to the disk. One file per peer.
 	 */
 	void saveFileList() {
 		try {
+			File dir = new File(".");
+			for (File file : dir.listFiles()) {
+				if (file.getName().endsWith(".files")) {
+					System.out.println("Deleting: "+file.getName());
+					file.delete();
+				}
+			}
 
 
 			for (String server : clientsFiles.keySet()) {
@@ -60,6 +68,7 @@ public class FileList {
 					fw.write("\n");
 				}
 				fw.close();
+				System.out.println("Writing: " + server + ".files");
 			}
 
 		} catch (IOException e) {
@@ -74,16 +83,14 @@ public class FileList {
 	 */
 	void addFiles(String host, Vector<String> files) {
 		deleteFiles(host);
-		Vector<String> hosts = clientsFiles.get(host);
-		if (hosts != null) {
-			for (String filename : files) {
-				hosts.add(filename);
-				if (!allFiles.contains(filename)) {
-					allFiles.add(filename);
-				}
+		for (String filename : files) {
+			if (!allFiles.contains(filename)) {
+				allFiles.add(filename);
 			}
-			saveFileList();
 		}
+		clientsFiles.put(host, files);
+		saveFileList();
+		
 
 	}
 
