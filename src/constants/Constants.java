@@ -2,7 +2,6 @@ package constants;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,10 +22,8 @@ public class Constants {
 	public static int port = 4010;
 	public static int serverport = 4004;
 
-	//the path of the file that contains the key
-	public static File keyfile = new File("key.pem");
 
-	public static String peerfile = "Peers.txt";
+
 
 	public enum MessageType {
 		HELLO(1), //tell the server I am here
